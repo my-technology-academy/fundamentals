@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Cyber Academy — Practice Questions</title>
+<style>
+:root {
+  --orange:#E8622A; --orange-l:#FFF3EE; --orange-m:#f97316;
+  --dark:#1A1A2E; --mid:#374151; --muted:#6B7280;
+  --light:#F9FAFB; --border:#E5E7EB; --white:#fff;
+  --teal:#0F766E; --teal-l:#F0FDFA;
+  --green:#16A34A; --green-l:#F0FDF4; --green-b:#BBF7D0;
+  --red:#DC2626; --red-l:#FEF2F2; --red-b:#FECACA;
+  --blue-l:#EFF6FF; --blue:#1D4ED8;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:var(--light);color:var(--mid);min-height:100vh}
+
+/* ── Header ── */
+.hdr{background:var(--dark);border-bottom:3px solid var(--orange);position:sticky;top:0;z-index:100}
+.hdr-in{max-width:860px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:13px 24px}
+.hdr-brand{display:flex;align-items:center;gap:11px}
+.hdr-logo{width:34px;height:34px;border-radius:7px;background:var(--orange);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#fff;flex-shrink:0}
+.hdr-title{font-size:15px;font-weight:700;color:#fff}
+.hdr-sub{font-size:11px;color:#9CA3AF;margin-top:1px}
+.hdr-score{font-size:12px;color:#9CA3AF}
+.hdr-score span{color:var(--orange);font-weight:700}
+
+/* ── Main ── */
+.main{max-width:860px;margin:0 auto;padding:28px 24px 80px}
+
+/* ── Hero ── */
+.hero{background:var(--dark);border-radius:12px;padding:28px 32px;margin-bottom:28px;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.hero h1{font-size:26px;font-weight:800;color:#fff;margin-bottom:6px;line-height:1.2}
+.hero h1 span{color:var(--orange)}
+.hero p{font-size:13px;color:#9CA3AF;line-height:1.65;max-width:440px}
+.hero-stats{display:flex;gap:20px;flex-shrink:0}
+.hstat{text-align:center}
+.hstat-n{font-size:26px;font-weight:800;color:var(--orange);line-height:1}
+.hstat-l{font-size:10px;color:#9CA3AF;margin-top:2px;text-transform:uppercase;letter-spacing:.06em}
+
+/* ── Module tabs ── */
+.mod-tabs{display:flex;gap:8px;margin-bottom:22px}
+.mod-tab{padding:9px 22px;border-radius:8px;font-size:13px;font-weight:600;border:1.5px solid var(--border);background:var(--white);color:var(--muted);cursor:pointer;transition:all .15s}
+.mod-tab.active{background:var(--orange);border-color:var(--orange);color:#fff}
+.mod-tab.grc-tab.active{background:var(--teal);border-color:var(--teal)}
+.mod-tab.grc-tab:not(.active):hover{border-color:var(--teal);color:var(--teal)}
+.mod-tab:not(.active):hover{border-color:var(--orange);color:var(--orange)}
+
+.mod-panel{display:none}
+.mod-panel.active{display:block}
+
+/* ── Module top bar ── */
+.mod-bar{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:18px 22px;margin-bottom:18px}
+.mod-bar h2{font-size:17px;font-weight:700;color:var(--dark);margin-bottom:3px}
+.mod-bar p{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:10px}
+.mod-badges{display:flex;gap:7px;flex-wrap:wrap}
+.mbadge{font-size:10px;font-weight:600;padding:2px 9px;border-radius:8px}
+.mb-g{background:#DCFCE7;color:#166534}
+.mb-a{background:#FEF9C3;color:#854D0E}
+.mb-r{background:#FEE2E2;color:#991B1B}
+.mb-t{background:var(--teal-l);color:var(--teal)}
+
+/* ── Progress ── */
+.prog-wrap{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:11px 18px;margin-bottom:18px;display:flex;align-items:center;gap:14px}
+.prog-lbl{font-size:12px;color:var(--muted);white-space:nowrap}
+.prog-track{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;border-radius:3px;transition:width .4s ease}
+.cf-fill{background:var(--orange)}
+.grc-fill{background:var(--teal)}
+.prog-ct{font-size:13px;font-weight:700;color:var(--dark);white-space:nowrap}
+
+/* ── Filters ── */
+.filters{display:flex;gap:7px;margin-bottom:18px;flex-wrap:wrap}
+.f-btn{padding:5px 13px;border-radius:14px;font-size:12px;font-weight:500;border:1px solid var(--border);background:var(--white);color:var(--muted);cursor:pointer;transition:all .15s}
+.f-btn:hover{border-color:var(--orange);color:var(--orange)}
+.f-btn.active{background:var(--orange);border-color:var(--orange);color:#fff}
+.grc-filters .f-btn:hover{border-color:var(--teal);color:var(--teal)}
+.grc-filters .f-btn.active{background:var(--teal);border-color:var(--teal);color:#fff}
+
+/* ── Question card ── */
+.q-card{background:var(--white);border:1px solid var(--border);border-radius:12px;margin-bottom:14px;overflow:hidden;transition:box-shadow .15s}
+.q-card:hover{box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.q-card.answered{border-left:4px solid var(--green)}
+.q-card.answered.wrong-final{border-left-color:var(--red)}
+
+.q-header{display:flex;align-items:flex-start;gap:13px;padding:17px 20px;cursor:pointer;user-select:none;transition:background .12s}
+.q-header:hover{background:#FAFAFA}
+.q-num{width:34px;height:34px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;margin-top:1px}
+.cf-num{background:var(--orange-l);color:var(--orange)}
+.grc-num{background:var(--teal-l);color:var(--teal)}
+.correct-num{background:#DCFCE7 !important;color:var(--green) !important}
+.wrong-num{background:#FEE2E2 !important;color:var(--red) !important}
+
+.q-meta{flex:1;min-width:0}
+.q-id{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px}
+.cf-id{color:var(--orange)}
+.grc-id{color:var(--teal)}
+.q-title{font-size:15px;font-weight:600;color:var(--dark);margin-bottom:3px;line-height:1.4}
+.q-subtitle{font-size:12px;color:var(--muted);line-height:1.4}
+.q-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
+.tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:7px}
+.t-easy{background:#F0FDF4;color:#166534}
+.t-medium{background:#FFFBEB;color:#92400E}
+.t-hard{background:#FEF2F2;color:#991B1B}
+.t-type{background:var(--blue-l);color:var(--blue)}
+.t-time{background:var(--light);color:var(--muted);border:1px solid var(--border)}
+.t-crest{background:var(--teal-l);color:var(--teal)}
+
+.q-chevron{flex-shrink:0;color:var(--muted);margin-top:5px;transition:transform .25s}
+.q-card.open .q-chevron{transform:rotate(180deg)}
+
+/* ── Body ── */
+.q-body{display:none;border-top:1px solid var(--border);padding:20px}
+.q-card.open .q-body{display:block}
+
+.lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:8px}
+.body-text{font-size:13px;line-height:1.75;color:var(--mid);white-space:pre-wrap}
+
+.scenario-box{background:var(--light);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:18px}
+.question-box{background:var(--blue-l);border:1px solid #BFDBFE;border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:14px 16px;margin-bottom:20px}
+.question-box .body-text{color:#1E40AF;font-weight:500;font-size:14px;white-space:normal}
+
+/* ── Options ── */
+.options{display:flex;flex-direction:column;gap:9px;margin-bottom:18px}
+.option{display:flex;align-items:flex-start;gap:12px;padding:13px 15px;border:1.5px solid var(--border);border-radius:9px;cursor:pointer;transition:all .18s;user-select:none}
+.option:hover:not(.locked){border-color:var(--orange);background:var(--orange-l)}
+.grc-panel .option:hover:not(.locked){border-color:var(--teal);background:var(--teal-l)}
+.option.selected:not(.locked){border-color:var(--orange);background:var(--orange-l)}
+.grc-panel .option.selected:not(.locked){border-color:var(--teal);background:var(--teal-l)}
+.option.correct{border-color:var(--green);background:var(--green-l);cursor:default}
+.option.incorrect{border-color:var(--red);background:var(--red-l);cursor:default}
+.option.neutral{opacity:.55;cursor:default}
+.option.locked{cursor:default}
+
+.opt-letter{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--muted);flex-shrink:0;margin-top:1px;transition:all .18s}
+.option.selected:not(.locked) .opt-letter{border-color:var(--orange);background:var(--orange);color:#fff}
+.grc-panel .option.selected:not(.locked) .opt-letter{border-color:var(--teal);background:var(--teal);color:#fff}
+.option.correct .opt-letter{border-color:var(--green);background:var(--green);color:#fff}
+.option.incorrect .opt-letter{border-color:var(--red);background:var(--red);color:#fff}
+.option.neutral .opt-letter{border-color:var(--border)}
+
+.opt-content{flex:1}
+.opt-text{font-size:13px;color:var(--dark);line-height:1.55}
+.opt-expl{font-size:12px;color:var(--muted);line-height:1.55;margin-top:5px;display:none}
+.option.correct .opt-expl,.option.incorrect .opt-expl,.option.neutral .opt-expl{display:block}
+.option.correct .opt-expl{color:#166534}
+.option.incorrect .opt-expl{color:#991B1B}
+
+.opt-icon{flex-shrink:0;margin-top:2px;display:none}
+.option.correct .opt-icon,.option.incorrect .opt-icon{display:block}
+.opt-icon svg{width:18px;height:18px}
+
+/* ── Submit / result ── */
+.submit-row{margin-bottom:16px}
+.btn-submit{padding:9px 22px;border-radius:8px;font-size:13px;font-weight:600;border:none;cursor:pointer;transition:all .15s;background:var(--orange);color:#fff}
+.btn-submit:hover{background:#D45520}
+.btn-submit:disabled{opacity:.4;cursor:default}
+.grc-panel .btn-submit{background:var(--teal)}
+.grc-panel .btn-submit:hover{background:#0D6B63}
+
+.result-banner{display:none;padding:12px 16px;border-radius:8px;margin-bottom:14px;font-size:13px;font-weight:500;line-height:1.55}
+.result-banner.show{display:block}
+.result-correct{background:var(--green-l);border:1px solid var(--green-b);color:#166534;border-left:3px solid var(--green)}
+.result-incorrect{background:var(--red-l);border:1px solid var(--red-b);color:#991B1B;border-left:3px solid var(--red)}
+
+.complete-row{display:flex;align-items:center;gap:8px;padding-top:12px;border-top:1px solid var(--border);margin-top:6px}
+.chk{width:16px;height:16px;accent-color:var(--orange);cursor:pointer}
+.chk-lbl{font-size:12px;color:var(--muted);cursor:pointer}
+
+.skills-row{display:flex;gap:5px;flex-wrap:wrap}
+.skill{font-size:11px;padding:2px 8px;border-radius:7px;border:1px solid rgba(0,0,0,.08)}
+.cf-skill{background:var(--orange-l);color:var(--orange)}
+.grc-skill{background:var(--teal-l);color:var(--teal)}
+
+.meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+.meta-cell{background:var(--light);border-radius:7px;padding:10px 13px}
+.meta-lbl{font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:4px}
+.meta-val{font-size:13px;font-weight:600;color:var(--dark)}
+
+.empty{text-align:center;padding:48px;color:var(--muted);font-size:14px}
+
+/* ── Reset button ── */
+.btn-reset{
+  padding:5px 12px;border-radius:7px;font-size:12px;font-weight:600;
+  border:1px solid var(--border);background:var(--white);color:var(--muted);
+  cursor:pointer;transition:all .15s;white-space:nowrap;flex-shrink:0;
+}
+.btn-reset:hover{border-color:var(--red);color:var(--red);background:#FEF2F2}
+
+/* ── Summary panel ── */
+.summary-panel{
+  display:none;background:var(--dark);border-radius:12px;
+  padding:28px 32px;margin-bottom:20px;
+}
+.summary-panel.show{display:block}
+.summary-title{font-size:20px;font-weight:800;color:#fff;margin-bottom:4px}
+.summary-sub{font-size:13px;color:#9CA3AF;margin-bottom:20px}
+.summary-score-row{display:flex;align-items:center;gap:20px;margin-bottom:20px;flex-wrap:wrap}
+.summary-big{font-size:52px;font-weight:800;color:var(--orange);line-height:1}
+.summary-out{font-size:20px;color:#6B7280;font-weight:500;align-self:flex-end;padding-bottom:6px}
+.summary-grade{font-size:14px;font-weight:700;padding:6px 16px;border-radius:20px;align-self:center}
+.grade-pass{background:rgba(34,197,94,.15);color:#4ADE80;border:1px solid rgba(34,197,94,.3)}
+.grade-good{background:rgba(251,191,36,.15);color:#FCD34D;border:1px solid rgba(251,191,36,.3)}
+.grade-retry{background:rgba(239,68,68,.15);color:#FCA5A5;border:1px solid rgba(239,68,68,.3)}
+.summary-breakdown{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px}
+.summary-cell{background:rgba(255,255,255,.06);border-radius:8px;padding:10px 12px;text-align:center}
+.summary-cell-n{font-size:22px;font-weight:800;color:var(--orange)}
+.summary-cell-l{font-size:10px;color:#9CA3AF;text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+.summary-msg{font-size:13px;color:#9CA3AF;line-height:1.65;border-top:1px solid rgba(255,255,255,.08);padding-top:16px}
+.summary-msg strong{color:#fff}
+
+@media(max-width:600px){
+  .hero{padding:22px 18px}
+  .hero-stats{display:none}
+  .main{padding:18px 14px 60px}
+  .meta-grid{grid-template-columns:1fr}
+  .summary-breakdown{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-in">
+    <div class="hdr-brand">
+      <div class="hdr-logo">MCA</div>
+      <div>
+        <div class="hdr-title">My Cyber Academy</div>
+        <div class="hdr-sub">Practice Questions</div>
+      </div>
+    </div>
+    <div class="hdr-score">Score: <span id="hdr-score">0</span> / 16</div>
+  </div>
+</header>
+
+<main class="main">
+
+  <div class="hero">
+    <div>
+      <h1>Practice <span>Questions</span></h1>
+      <p>Select your answer and get immediate feedback. Every option explains why it is correct or incorrect — read the explanations, not just the result.</p>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-n">16</div><div class="hstat-l">Questions</div></div>
+      <div class="hstat"><div class="hstat-n">2</div><div class="hstat-l">Modules</div></div>
+      <div class="hstat"><div class="hstat-n">10</div><div class="hstat-l">CREST-relevant</div></div>
+    </div>
+  </div>
+
+  <div class="mod-tabs">
+    <button class="mod-tab active" onclick="switchMod('cf',this)">Cyber Fundamentals — 8 Questions</button>
+    <button class="mod-tab grc-tab" onclick="switchMod('grc',this)">GRC Fundamentals — 8 Questions</button>
+  </div>
+
+  <!-- CF PANEL -->
+  <div class="mod-panel active" id="panel-cf">
+    <div class="mod-bar">
+      <h2>Cyber Fundamentals</h2>
+      <p>Attack chains, CIA triad, attacker profiles, WHWH model, policy hierarchy, defence in depth, incident triage.</p>
+      <div class="mod-badges">
+        <span class="mbadge mb-g">3 Easy</span>
+        <span class="mbadge mb-a">3 Medium</span>
+        <span class="mbadge mb-r">2 Hard</span>
+        <span class="mbadge mb-t">4 CREST-relevant</span>
+      </div>
+    </div>
+    <div class="prog-wrap">
+      <span class="prog-lbl">Score</span>
+      <div class="prog-track"><div class="prog-fill cf-fill" id="cf-bar" style="width:0%"></div></div>
+      <span class="prog-ct" id="cf-score">0 / 8</span>
+      <button class="btn-reset" onclick="resetModule('cf')">&#8635; Reset</button>
+    </div>
+    <div id="cf-summary"></div>
+    <div class="filters" id="cf-filters">
+      <button class="f-btn active" onclick="setFilter('cf','all',this)">All</button>
+      <button class="f-btn" onclick="setFilter('cf','easy',this)">Easy</button>
+      <button class="f-btn" onclick="setFilter('cf','medium',this)">Medium</button>
+      <button class="f-btn" onclick="setFilter('cf','hard',this)">Hard</button>
+      <button class="f-btn" onclick="setFilter('cf','crest',this)">CREST-relevant</button>
+    </div>
+    <div id="cf-cards"></div>
+  </div>
+
+  <!-- GRC PANEL -->
+  <div class="mod-panel grc-panel" id="panel-grc">
+    <div class="mod-bar">
+      <h2>GRC Fundamentals</h2>
+      <p>Risk treatment, data classification, framework selection, GDPR lawful bases, audit evidence, ICO notification, risk registers.</p>
+      <div class="mod-badges">
+        <span class="mbadge mb-g">3 Easy</span>
+        <span class="mbadge mb-a">3 Medium</span>
+        <span class="mbadge mb-r">2 Hard</span>
+        <span class="mbadge mb-t">6 CREST-relevant</span>
+      </div>
+    </div>
+    <div class="prog-wrap">
+      <span class="prog-lbl">Score</span>
+      <div class="prog-track"><div class="prog-fill grc-fill" id="grc-bar" style="width:0%"></div></div>
+      <span class="prog-ct" id="grc-score">0 / 8</span>
+      <button class="btn-reset" onclick="resetModule('grc')">&#8635; Reset</button>
+    </div>
+    <div id="grc-summary"></div>
+    <div class="filters grc-filters" id="grc-filters">
+      <button class="f-btn active" onclick="setFilter('grc','all',this)">All</button>
+      <button class="f-btn" onclick="setFilter('grc','easy',this)">Easy</button>
+      <button class="f-btn" onclick="setFilter('grc','medium',this)">Medium</button>
+      <button class="f-btn" onclick="setFilter('grc','hard',this)">Hard</button>
+      <button class="f-btn" onclick="setFilter('grc','crest',this)">CREST-relevant</button>
+    </div>
+    <div id="grc-cards"></div>
+  </div>
+
+</main>
+
+<script>
+const QUESTIONS = {
+cf: [
+  {
+    id:"CF-1", n:"1", diff:"easy", crest:false,
+    title:"The attack chain — initial access",
+    subtitle:"Identify the correct control to stop the most common first stage of a breach",
+    type:"Concept", time:"3 min",
+    skills:["Attack chain","Phishing","Defensive controls"],
+    scenario:"A finance employee receives a convincing email appearing to come from their payroll provider. The email asks them to verify their account details by clicking a link. They click it and enter their Microsoft 365 username and password into a page that looks identical to the real login portal.",
+    question:"This is Stage 1 of the attack chain. Which single control would have been MOST effective at preventing the attacker from using those stolen credentials to access the company network?",
+    options:[
+      {
+        letter:"A",
+        text:"Deploy antivirus software on all company laptops",
+        correct:false,
+        expl:"Antivirus protects against malware on the device — it does not prevent credential theft via a fake login page. The employee wasn't infected; they were deceived. Antivirus doesn't help here."
+      },
+      {
+        letter:"B",
+        text:"Implement multi-factor authentication (MFA) on all accounts",
+        correct:true,
+        expl:"Correct. MFA means the attacker has the password but still cannot log in — they don't have the second factor (authenticator app, SMS code, hardware token). This is the single most effective control at this stage. Even with the password stolen, the attack chain is broken."
+      },
+      {
+        letter:"C",
+        text:"Install a firewall at the network perimeter",
+        correct:false,
+        expl:"A perimeter firewall controls what traffic enters or leaves the network — it does not prevent an attacker from logging in with valid stolen credentials. The attacker isn't breaking through the firewall; they're using a legitimate front door."
+      },
+      {
+        letter:"D",
+        text:"Require employees to use longer passwords",
+        correct:false,
+        expl:"The password wasn't cracked — it was handed over voluntarily. Longer passwords provide no protection against phishing. The employee typed their password into a fake site regardless of its length."
+      }
+    ]
+  },
+  {
+    id:"CF-2", n:"2", diff:"easy", crest:true,
+    title:"CIA triad — incident classification",
+    subtitle:"Match a security incident to the correct CIA principle",
+    type:"Classification", time:"3 min",
+    skills:["CIA triad","DAD triad","Incident classification"],
+    scenario:"An attacker gains access to a company's billing system and quietly changes the bank account numbers on 14 outgoing invoices. The invoice amounts and client details remain correct — only the sort codes and account numbers are modified. Over six weeks, £280,000 is paid into attacker-controlled accounts before anyone notices.",
+    question:"Which element of the CIA triad has primarily been violated in this attack?",
+    options:[
+      {
+        letter:"A",
+        text:"Confidentiality — because the attacker accessed data they were not authorised to see",
+        correct:false,
+        expl:"Confidentiality relates to unauthorised disclosure of information. In this attack, the attacker did not steal or expose data — they modified it. The client names, amounts, and invoice details were never leaked to a third party."
+      },
+      {
+        letter:"B",
+        text:"Integrity — because data was modified without authorisation",
+        correct:true,
+        expl:"Correct. Integrity means data is accurate and has not been tampered with. This is a classic integrity attack — data was altered (bank account numbers changed) without authorisation. The corresponding DAD element is Alteration. This type of attack is particularly dangerous because it can go undetected for weeks."
+      },
+      {
+        letter:"C",
+        text:"Availability — because the billing system was disrupted",
+        correct:false,
+        expl:"Availability relates to systems being accessible when needed. The billing system was not taken offline or disrupted — it continued operating normally. Staff could access it throughout. The problem was the accuracy of the data within it, not access to the system itself."
+      },
+      {
+        letter:"D",
+        text:"All three — confidentiality, integrity, and availability were all violated",
+        correct:false,
+        expl:"While breaches often affect multiple CIA elements, this specific attack primarily targeted integrity. There is no evidence of data disclosure (confidentiality) or system downtime (availability). Selecting 'all three' avoids making a precise analysis — which is exactly what a consultant needs to do."
+      }
+    ]
+  },
+  {
+    id:"CF-3", n:"3", diff:"easy", crest:false,
+    title:"Attacker profiles — motivation",
+    subtitle:"Identify the most likely attacker type from the attack characteristics",
+    type:"Classification", time:"3 min",
+    skills:["Attacker profiles","Threat modelling"],
+    scenario:"A critical water utility in the UK has experienced repeated network intrusions over a 14-month period. The attackers have not stolen data, demanded payment, or caused any operational disruption. Forensic analysis shows they have been quietly mapping the industrial control systems and maintaining persistent access. The tooling used is highly sophisticated and shows no indicators of commercial motivation.",
+    question:"Which attacker type BEST describes the threat actor in this scenario?",
+    options:[
+      {
+        letter:"A",
+        text:"Cybercriminal — financially motivated attackers seeking profit",
+        correct:false,
+        expl:"Cybercriminals are financially motivated. They seek ransom payments, data to sell, or direct financial theft. This attack has zero financial indicators — no ransom, no data exfiltration for sale, no fraud. A cybercriminal would not spend 14 months in a network without monetising the access."
+      },
+      {
+        letter:"B",
+        text:"Script kiddie — low-skill attackers using automated tools",
+        correct:false,
+        expl:"Script kiddies use pre-written tools with limited skill or strategy. The 14-month persistence, sophisticated tooling, and deliberate focus on industrial control systems without causing disruption requires significant capability and patience — the opposite of a script kiddie's profile."
+      },
+      {
+        letter:"C",
+        text:"Nation-state actor / APT — government-sponsored long-term espionage or pre-positioning",
+        correct:true,
+        expl:"Correct. The combination of 14-month dwell time, critical national infrastructure targeting, sophisticated tooling, no financial motivation, and quiet persistence without disruption are the defining hallmarks of a nation-state Advanced Persistent Threat. The most likely objective is pre-positioning — the ability to cause disruption at a future chosen moment, or ongoing intelligence gathering about national infrastructure."
+      },
+      {
+        letter:"D",
+        text:"Hacktivist — politically motivated attackers seeking to disrupt or embarrass",
+        correct:false,
+        expl:"Hacktivists seek visibility — website defacement, public data leaks, service disruption with a political message attached. This attack has none of those characteristics. It is entirely covert, with no public-facing action and no political statement. Covert persistence is the opposite of hacktivist behaviour."
+      }
+    ]
+  },
+  {
+    id:"CF-4", n:"4", diff:"medium", crest:true,
+    title:"WHWH model — impact quantification",
+    subtitle:"Apply the 'What's the impact' stage of the WHWH framework",
+    type:"Application", time:"5 min",
+    skills:["WHWH model","Risk assessment","Stakeholder communication"],
+    scenario:"During a penetration test of a law firm, you discover that all client case files — including legally privileged communications, financial records, and asylum seeker personal data — are accessible from a single compromised standard user account. The firm has 240 active clients and handles a mixture of immigration, family, and commercial law.",
+    question:"You are presenting the impact of this finding to the firm's managing partner. Which statement BEST captures the full business impact for inclusion in your report?",
+    options:[
+      {
+        letter:"A",
+        text:"This is a Critical severity finding. Recommend patching the access control configuration immediately.",
+        correct:false,
+        expl:"This is purely technical — it tells the managing partner nothing about why this matters to their business. A severity rating without business context does not drive action or budget approval. 'Patch the access control' is a remediation instruction, not an impact statement."
+      },
+      {
+        letter:"B",
+        text:"Unauthorised access to client files would breach solicitor-client privilege, create SRA regulatory exposure, violate UK GDPR for personal data including Special Category immigration data, and could result in professional negligence claims from affected clients.",
+        correct:true,
+        expl:"Correct. This is a complete impact statement that covers legal (SRA regulatory exposure), compliance (UK GDPR, Special Category data), professional (solicitor-client privilege), and financial (negligence claims) dimensions. It speaks the language of a managing partner — not a technical audience. The WHWH model requires impact to be quantified in business terms, not just technical severity."
+      },
+      {
+        letter:"C",
+        text:"The CVSS score for this vulnerability is 9.1, indicating critical risk requiring immediate remediation within 24 hours.",
+        correct:false,
+        expl:"CVSS scores are a useful technical shorthand between security professionals but are meaningless to a managing partner. A number without context does not explain what gets compromised, who is affected, or what the real-world consequences are. A board member cannot act on a CVSS score alone."
+      },
+      {
+        letter:"D",
+        text:"We recommend implementing role-based access control and reviewing all user permissions within the next 30 days.",
+        correct:false,
+        expl:"This is a remediation recommendation — the fourth stage of WHWH — not an impact statement. The third stage (What's the impact?) must be answered before moving to the fix. Jumping to remediation without establishing impact means the business cannot understand what it is protecting against or why the investment is justified."
+      }
+    ]
+  },
+  {
+    id:"CF-5", n:"5", diff:"medium", crest:false,
+    title:"Security policy hierarchy",
+    subtitle:"Identify the correct level of the policy hierarchy for a given document",
+    type:"Classification", time:"4 min",
+    skills:["Policy hierarchy","Security policy"],
+    scenario:`A cybersecurity consultant is reviewing a company's documentation. They find the following four documents:\n\n1. "All company information assets must be protected in accordance with their classification and value to the organisation." — Signed by the CEO.\n2. "All passwords must be a minimum of 14 characters, contain uppercase, lowercase, numbers, and symbols, and must not be reused within 12 cycles."\n3. "Step 1: Verify the caller's identity using the employee ID and manager name. Step 2: Reset the password in Active Directory. Step 3: Confirm the reset via a secondary email address on file."\n4. "When working from home, it is recommended that you position your screen away from windows and use a privacy screen filter where possible."`,
+    question:"Which document is a PROCEDURE?",
+    options:[
+      {
+        letter:"A",
+        text:"Document 1 — the CEO-signed statement about protecting information assets",
+        correct:false,
+        expl:"Document 1 is a Policy — a high-level statement of management's intent, mandatory and signed by senior leadership. Policies set the 'what we intend' without specifying how. They apply to everyone in the organisation."
+      },
+      {
+        letter:"B",
+        text:"Document 2 — the specific password length and complexity requirements",
+        correct:false,
+        expl:"Document 2 is a Standard — a specific, mandatory technical requirement that supports the policy. Standards define the 'what must be done' in measurable terms. They are mandatory but do not describe the step-by-step process for implementation."
+      },
+      {
+        letter:"C",
+        text:"Document 3 — the step-by-step helpdesk password reset instructions",
+        correct:true,
+        expl:"Correct. Document 3 is a Procedure — step-by-step instructions for carrying out a specific task. Procedures define the 'how' and are essential for consistency and auditability. This password reset procedure also serves as a control against social engineering — identity verification is built into the process."
+      },
+      {
+        letter:"D",
+        text:"Document 4 — the home working screen positioning recommendations",
+        correct:false,
+        expl:"Document 4 is a Guideline — recommended best practice that is not mandatory. Guidelines provide advice and suggestions to help staff make good security decisions. The word 'recommended' is the key indicator. Unlike policies, standards, and procedures, guidelines can be deviated from without automatic non-compliance."
+      }
+    ]
+  },
+  {
+    id:"CF-6", n:"6", diff:"medium", crest:false,
+    title:"Defence in depth — missing layer",
+    subtitle:"Identify the most critical missing layer in a described security architecture",
+    type:"Application", time:"5 min",
+    skills:["Defence in depth","Control selection","People-process-technology"],
+    scenario:"A 75-person professional services firm has the following security controls in place: a perimeter firewall, Windows Defender on all endpoints, strong password requirements across all systems, a signed acceptable use policy for new starters, and SharePoint for cloud file storage. They have experienced no known incidents in 18 months.",
+    question:"A consultant reviews their setup and identifies one critical gap that would allow an attacker with stolen credentials to access the entire SharePoint environment undetected. What is the most likely missing control?",
+    options:[
+      {
+        letter:"A",
+        text:"A more expensive enterprise firewall to replace the existing one",
+        correct:false,
+        expl:"The problem described is an attacker using legitimate stolen credentials — not an attacker breaking through a firewall. Upgrading the firewall does nothing to prevent a credential-based login. The attacker is using the front door, not breaking a window. Firewall upgrades would not address this attack path."
+      },
+      {
+        letter:"B",
+        text:"Multi-factor authentication on all accounts, especially SharePoint and Microsoft 365",
+        correct:true,
+        expl:"Correct. Without MFA, stolen credentials give an attacker immediate, full access to SharePoint from anywhere in the world — and it looks identical to a legitimate login. MFA is the identity layer of defence in depth. The firm has perimeter, endpoint, and process layers covered, but the identity layer has no second factor. This is the most critical gap."
+      },
+      {
+        letter:"C",
+        text:"A more detailed acceptable use policy covering cloud storage",
+        correct:false,
+        expl:"The AUP is a process control — it sets behavioural expectations. It does not prevent a technical attack using stolen credentials. An attacker doesn't read the AUP before logging into SharePoint. Policy documents do not substitute for technical controls at the identity layer."
+      },
+      {
+        letter:"D",
+        text:"Regular staff awareness training about phishing",
+        correct:false,
+        expl:"Phishing training is valuable and addresses the people layer — but the question asks about the gap that allows access with stolen credentials. Even perfect phishing awareness doesn't prevent all credential theft. The correct answer addresses what happens AFTER credentials are stolen — and MFA is what stops the attacker at that point."
+      }
+    ]
+  },
+  {
+    id:"CF-7", n:"7", diff:"hard", crest:true,
+    title:"SUF triad — balancing security and usability",
+    subtitle:"Apply the SUF triad to a real stakeholder objection",
+    type:"Application", time:"6 min",
+    skills:["SUF triad","Risk appetite","Stakeholder communication"],
+    scenario:'You recommend MFA for all staff at a law firm. The managing partner responds: "We tried a similar system two years ago. Our lawyers left their sessions permanently logged in to avoid the friction. We ended up with worse security than before we started. I\'d rather not implement something people find ways around."',
+    question:"The managing partner's concern is partially valid. Which response BEST demonstrates understanding of the SUF triad while still progressing the security requirement?",
+    options:[
+      {
+        letter:"A",
+        text:"Insist MFA is non-negotiable and escalate to the board if the partner refuses to approve it",
+        correct:false,
+        expl:"This ignores a legitimate operational concern and the evidence the managing partner has provided from their own experience. Forcing through a control that people will circumvent — as already demonstrated — achieves nothing. Good security consultancy requires understanding the usability dimension, not overriding it with authority."
+      },
+      {
+        letter:"B",
+        text:"Accept the managing partner's position and remove MFA from the recommendations",
+        correct:false,
+        expl:"The risk without MFA at a firm handling legally privileged data is genuinely unacceptable — credential compromise creates SRA regulatory exposure and client confidentiality breaches. Accepting the position entirely abandons the security requirement. The managing partner's concern about usability is valid; their conclusion to drop MFA entirely is not."
+      },
+      {
+        letter:"C",
+        text:"Acknowledge the previous failure was an implementation problem, not a MFA problem, and propose a phased rollout with device-appropriate methods and session timeout rather than per-login authentication",
+        correct:true,
+        expl:"Correct. This demonstrates SUF triad thinking — security is non-negotiable, but usability must be designed in or the control fails. The previous system failed because of poor implementation (too much friction per-login). The solution is better design: hardware tokens for staff without smartphones, session-based re-authentication rather than every login, phased rollout starting with highest-risk systems. Security and usability are not mutually exclusive — they require intentional design."
+      },
+      {
+        letter:"D",
+        text:"Replace MFA with a stronger password policy requiring 20-character passwords changed every 30 days",
+        correct:false,
+        expl:"This makes the usability problem significantly worse — 20-character passwords changed monthly will be written on Post-it notes within a week. It also doesn't address the actual threat: credentials stolen via phishing or social engineering. A stolen 20-character password is just as useful to an attacker as a stolen 8-character one. This fails both the security and usability dimensions simultaneously."
+      }
+    ]
+  },
+  {
+    id:"CF-8", n:"8", diff:"hard", crest:true,
+    title:"Incident triage — prioritisation under pressure",
+    subtitle:"Prioritise three simultaneous incidents correctly and justify the order",
+    type:"Application", time:"6 min",
+    skills:["Incident triage","CIA triad","Risk assessment"],
+    scenario:`Monday morning. Three incidents are reported simultaneously at a manufacturing client:\n\n(A) Production line halted — control system errors. System unpatched for 18 months, known CVE published 6 weeks ago. No external network connectivity confirmed.\n\n(B) Accounts payable processed a £45,000 bank transfer 20 minutes ago based on a CEO email request to an unfamiliar supplier — now suspected to be Business Email Compromise fraud.\n\n(C) Central backup server shows an alert from 3am — files accessed and deleted overnight. This server holds the only copies of two years of financial records.`,
+    question:"In what order should these incidents be prioritised, and what is the primary reason for ranking incident C highest?",
+    options:[
+      {
+        letter:"A",
+        text:"A, B, C — production disruption causes immediate revenue loss and should always be prioritised first",
+        correct:false,
+        expl:"Production disruption is serious, but incident A has no confirmed external attacker and the system has no external connectivity — the risk is contained. Revenue impact alone does not determine incident priority. The threat posed by an active attacker still in the network (C) and a live fraud with a closing time window (B) both outrank a contained operational issue."
+      },
+      {
+        letter:"B",
+        text:"C, B, A — because backup deletion is almost certainly a pre-ransomware indicator meaning an attacker is likely still active in the network right now",
+        correct:true,
+        expl:"Correct. Attackers delete backups before deploying ransomware to maximise leverage — no backups means no recovery without paying. C is Critical: an active attacker is likely still in the network and every minute of delay increases the blast radius. B is High: a bank transfer processed 20 minutes ago may still be reversible — UK banks have fraud recall processes within narrow time windows that are closing now. A is Medium: contained, no confirmed external threat, can be investigated in parallel without the same urgency."
+      },
+      {
+        letter:"C",
+        text:"B, C, A — because financial fraud should always take priority as it involves direct monetary loss",
+        correct:false,
+        expl:"The financial loss from B (£45,000) is significant but potentially recoverable through bank fraud recall. The potential loss from C — an active ransomware attack on an organisation with no backups — is existential. Incident C also represents an ongoing threat that is actively escalating right now. B is urgent but C is more critical."
+      },
+      {
+        letter:"D",
+        text:"B, A, C — the backup deletion is probably an automated system error and can be investigated later",
+        correct:false,
+        expl:"Assuming backup deletion is a system error rather than an attacker action is a dangerous default. The combination of unusual access AND deletion overnight is a strong pre-ransomware indicator. Treating it as low priority while an attacker potentially completes their preparation is exactly the decision that turns a containable incident into a catastrophic one. When in doubt, assume the worst-case scenario and rule it out — never the reverse."
+      }
+    ]
+  }
+],
+grc: [
+  {
+    id:"GRC-1", n:"1", diff:"easy", crest:true,
+    title:"Risk treatment — choosing the right response",
+    subtitle:"Select the correct treatment option for a specific risk scenario",
+    type:"Application", time:"3 min",
+    skills:["Risk treatment","Risk appetite"],
+    scenario:"A risk assessment has identified the following: An internet-facing Windows server is running unpatched software with a known CVE published three weeks ago. The CVE has a CVSS score of 9.8 and proof-of-concept exploit code is publicly available. The server hosts the company's customer-facing payment portal. The risk has been scored Impact: 5, Likelihood: 5, Score: 25.",
+    question:"Which risk treatment option is MOST appropriate for this risk, and why?",
+    options:[
+      {
+        letter:"A",
+        text:"Accept — document the risk and review at the next quarterly risk meeting",
+        correct:false,
+        expl:"Risk acceptance is only appropriate when the risk score falls within the organisation's risk tolerance, or when treatment costs outweigh the risk. A score of 25 (maximum) on an internet-facing payment system with publicly available exploit code and no compensating controls is not an acceptable candidate for acceptance. This would expose the organisation to PCI-DSS violations and regulatory liability."
+      },
+      {
+        letter:"B",
+        text:"Transfer — purchase cyber insurance to cover the financial impact of a potential breach",
+        correct:false,
+        expl:"Transfer (insurance) passes the financial consequence of a risk — it does not eliminate the vulnerability. With a CVSS 9.8 and public exploit code on a payment portal, insurance does not protect the organisation from breach, regulatory fines, or reputational damage. Transfer is most appropriate for lower-likelihood risks, not near-certain critical exposures."
+      },
+      {
+        letter:"C",
+        text:"Mitigate — apply the patch or isolate the server from the internet immediately as an emergency change",
+        correct:true,
+        expl:"Correct. Mitigate is the right choice: reduce the risk to an acceptable level through a control. With a score of 25, public exploit code, and the server directly hosting payment data, this requires emergency treatment — not a scheduled maintenance window. Patch immediately or take the server offline and serve the payment portal through an alternative route until patched. Speed matters here: proof-of-concept code means attackers are already exploiting this in the wild."
+      },
+      {
+        letter:"D",
+        text:"Avoid — permanently decommission the payment portal to eliminate the risk entirely",
+        correct:false,
+        expl:"Avoid is a valid treatment option — eliminate the activity that creates the risk. However, decommissioning the payment portal would likely destroy the business. Avoid is appropriate when an activity is non-essential or when the risk is truly unmanageable. Here, the risk is very manageable with a patch. Avoid would be disproportionate and commercially destructive."
+      }
+    ]
+  },
+  {
+    id:"GRC-2", n:"2", diff:"easy", crest:false,
+    title:"Data classification — applying the tiers",
+    subtitle:"Classify a data item correctly and identify the appropriate control",
+    type:"Classification", time:"3 min",
+    skills:["Data classification","UK GDPR","Access control"],
+    scenario:"A healthcare technology company is conducting a data audit. The audit team discovers a spreadsheet on a shared drive containing: patient full names, NHS numbers, dates of birth, GP surgery details, and current diagnosis codes for 4,200 patients.",
+    question:"What classification tier should this data be assigned, and what is the MOST important immediate control to apply?",
+    options:[
+      {
+        letter:"A",
+        text:"Internal — restrict to employees only and add a password to the spreadsheet",
+        correct:false,
+        expl:"Internal classification is for general business information without significant legal protection requirements. Patient medical data linked to identifiable individuals is Special Category personal data under UK GDPR — it carries the strictest obligations of any data type. 'Internal' classification and a spreadsheet password are wholly inadequate controls for this data."
+      },
+      {
+        letter:"B",
+        text:"Confidential — encrypt the spreadsheet and restrict access to the clinical team",
+        correct:false,
+        expl:"While Confidential is closer, patient diagnosis data linked to names and NHS numbers is Special Category data — a distinct and more protected category under UK GDPR Article 9. Special Category data requires stricter controls than standard Confidential data, including explicit lawful basis documentation, Data Protection Impact Assessment consideration, and audit trail on every access. 'Restrict to clinical team' is correct but the classification and controls described are still insufficient."
+      },
+      {
+        letter:"C",
+        text:"Secret / Restricted — remove from shared drive immediately, encrypt, restrict to named individuals only with a full access audit trail",
+        correct:true,
+        expl:"Correct. Medical data linked to identifiable patients is Special Category data under UK GDPR — the highest protection tier. It should never be on a general shared drive accessible to all staff. The immediate actions are correct: remove from open access, encrypt at rest and in transit, restrict to a named, justified list of individuals, and implement an audit trail on all access. A Data Protection Officer should also be notified and a DPIA considered."
+      },
+      {
+        letter:"D",
+        text:"Public — this data is already held by the NHS so it has no special protection requirements",
+        correct:false,
+        expl:"This is completely incorrect. The fact that the NHS also holds this data has no bearing on this organisation's legal obligations under UK GDPR. Each data controller is independently responsible for data they process. Medical data linked to named individuals is Special Category data regardless of who else holds it, and carries maximum legal protection requirements."
+      }
+    ]
+  },
+  {
+    id:"GRC-3", n:"3", diff:"easy", crest:true,
+    title:"Framework selection — matching need to standard",
+    subtitle:"Identify the correct framework for a specific client requirement",
+    type:"Classification", time:"3 min",
+    skills:["Frameworks","Cyber Essentials","ISO 27001","UK GDPR"],
+    scenario:"A 50-person UK-based IT services company wants to bid for a central government contract to provide desktop support services to a government department. The contract tender document states: 'All suppliers must provide evidence of compliance with the government's minimum cyber security standard for suppliers handling government data or working on government premises.'",
+    question:"Which certification does this client MOST urgently need to obtain to bid for this contract?",
+    options:[
+      {
+        letter:"A",
+        text:"ISO 27001 certification",
+        correct:false,
+        expl:"ISO 27001 is the international gold standard for information security management — and it is valuable for many enterprise and government engagements. However, it is not the specific certification required by the UK government's minimum supplier standard. It is also significantly more expensive and time-consuming to achieve than what this specific requirement demands."
+      },
+      {
+        letter:"B",
+        text:"Cyber Essentials Plus",
+        correct:true,
+        expl:"Correct. The UK government mandates Cyber Essentials Plus for all suppliers handling government data or working on government premises. This is an NCSC-backed scheme covering five control areas, independently verified by a qualified assessor. It is specifically designed as the government's baseline supplier standard. Without this certificate, the bid cannot proceed regardless of how strong the company's other security credentials are."
+      },
+      {
+        letter:"C",
+        text:"SOC 2 Type II report",
+        correct:false,
+        expl:"SOC 2 is an American auditing framework used primarily by US cloud service providers to demonstrate controls to US enterprise clients. It is not recognised by the UK government as a supplier security standard and would not satisfy the requirement described in the tender document."
+      },
+      {
+        letter:"D",
+        text:"PCI-DSS compliance certificate",
+        correct:false,
+        expl:"PCI-DSS governs organisations that store, process, or transmit payment card data. Unless this IT services company is specifically handling card payments on behalf of the government department, PCI-DSS is irrelevant to this contract requirement. It addresses a completely different risk domain."
+      }
+    ]
+  },
+  {
+    id:"GRC-4", n:"4", diff:"medium", crest:true,
+    title:"GDPR lawful basis — identifying the correct ground",
+    subtitle:"Determine whether a specific data processing activity has a valid lawful basis",
+    type:"Application", time:"5 min",
+    skills:["UK GDPR","Lawful basis","Data protection"],
+    scenario:"A retail company has built a database of 15,000 email addresses purchased from a third-party data broker. The broker assured them the data was 'collected with appropriate permissions.' The company's marketing team has begun sending promotional emails to all contacts on the list. When a customer on the list complains and asks what legal basis the company has for contacting them, the marketing director responds: 'We have legitimate interests in marketing our products.'",
+    question:"Is the marketing director's lawful basis claim correct, and what should the company actually do?",
+    options:[
+      {
+        letter:"A",
+        text:"Yes — Legitimate Interests is a broad basis that covers most commercial marketing activities",
+        correct:false,
+        expl:"Legitimate Interests is not a blanket cover for marketing. It requires a three-part test: (1) identify a legitimate interest, (2) show the processing is necessary for that interest, and (3) balance it against the individual's rights — including whether they would reasonably expect to be contacted. Buying a list of strangers and emailing them without any prior relationship fails the balancing test. The individuals had no relationship with this company and would not reasonably expect contact from them."
+      },
+      {
+        letter:"B",
+        text:"No — purchasing a list from a broker does not transfer the consent those individuals may have given to the original collector. The company has no valid lawful basis and must stop sending emails and delete the list.",
+        correct:true,
+        expl:"Correct. Consent under UK GDPR must be freely given, specific, informed, and unambiguous — and it must be given to the specific organisation that will use it. Purchasing a list does not transfer consent. Even if individuals consented to the broker collecting their data, they did not consent to this retail company contacting them. This is also likely a PECR (Privacy and Electronic Communications Regulations) violation, which requires prior consent for unsolicited direct marketing emails. The company must stop immediately and delete the list."
+      },
+      {
+        letter:"C",
+        text:"Yes — the broker confirmed the data was collected with appropriate permissions, so the company is covered",
+        correct:false,
+        expl:"Relying on a broker's assurance without independent verification is not a lawful basis. The company is a data controller and is independently responsible for ensuring their processing is lawful. If challenged by the ICO, 'the broker told us it was fine' is not a defence. The company must be able to demonstrate their own lawful basis — and purchasing a list does not provide one."
+      },
+      {
+        letter:"D",
+        text:"No — but they can legitimise the list retrospectively by adding an unsubscribe link to future emails",
+        correct:false,
+        expl:"An unsubscribe link is a good practice for ongoing consent management, but it does not retrospectively create a lawful basis for communications that were never consented to in the first place. You cannot 'opt people in' by emailing them without basis and then offering to opt them out. The initial sending was unlawful regardless of any unsubscribe mechanism."
+      }
+    ]
+  },
+  {
+    id:"GRC-5", n:"5", diff:"medium", crest:true,
+    title:"Audit evidence — what counts as proof",
+    subtitle:"Assess the quality of evidence provided during a security audit",
+    type:"Analysis", time:"5 min",
+    skills:["Audit & assurance","Evidence-based compliance","Gap analysis"],
+    scenario:"You are conducting a Cyber Essentials Plus assessment. The control area being assessed is patch management. The IT manager provides you with: (1) a verbal assurance that 'all machines are updated monthly,' (2) a single screenshot of Windows Update settings showing automatic updates enabled on one laptop, and (3) a WSUS console report showing successful patch deployment to 38 of 47 Windows machines in the last 28 days.",
+    question:"Based on the evidence provided, what is the MOST accurate assessment?",
+    options:[
+      {
+        letter:"A",
+        text:"The evidence is sufficient — the IT manager's confirmation, the screenshot, and the WSUS report together demonstrate a patch management process is in place",
+        correct:false,
+        expl:"Verbal assurances are inadmissible in a CE+ audit — they cannot be independently verified. One screenshot evidences one device. These two items add no evidential value. Only the WSUS report constitutes real evidence, and it only covers 38 of 47 devices. 'Together' these items do not constitute sufficient evidence — two weak items alongside one good one does not make three good items."
+      },
+      {
+        letter:"B",
+        text:"The WSUS report is sufficient evidence on its own to pass the patch management control",
+        correct:false,
+        expl:"The WSUS report is the only real evidence provided, but it covers 38 of 47 devices — leaving 9 devices unevidenced. CE+ requires evidence for all in-scope devices, not a sample. The 9 missing devices must either be evidenced (MDM report, individual screenshots, etc.) or formally excluded from scope with justification."
+      },
+      {
+        letter:"C",
+        text:"The verbal assurance and screenshot should be rejected as inadmissible. The WSUS report is valid evidence for 38 devices, but the remaining 9 unaccounted devices represent an open finding until evidenced or formally excluded from scope.",
+        correct:true,
+        expl:"Correct. This is precise, evidence-based audit thinking. Verbal statements are inadmissible — they prove nothing. One screenshot proves one device. The WSUS report is genuine system-generated evidence with timestamps and is the strongest item provided. However, it only covers 38/47 devices. The 9 gap must be closed: either produce equivalent evidence for those devices, or formally document why they are out of scope (e.g. non-Windows devices managed differently, or genuinely offline/isolated). This is exactly how a CE+ assessor should reason."
+      },
+      {
+        letter:"D",
+        text:"The IT manager should be asked to re-run the WSUS report to include all 47 devices before any assessment can proceed",
+        correct:false,
+        expl:"WSUS only manages Windows devices via Group Policy. It may be technically impossible for WSUS to cover all 47 devices if some are Mac, Linux, mobile, or not domain-joined. Asking for a WSUS report covering all devices shows a misunderstanding of the tool. The correct approach is to identify what management system covers the remaining devices and request the appropriate evidence from that system."
+      }
+    ]
+  },
+  {
+    id:"GRC-6", n:"6", diff:"medium", crest:true,
+    title:"ICO breach notification — does the 72-hour rule apply?",
+    subtitle:"Determine whether a specific incident requires mandatory ICO notification",
+    type:"Application", time:"5 min",
+    skills:["UK GDPR","ICO","Breach notification","Risk to individuals"],
+    scenario:"A GP surgery's IT system is hit by ransomware on a Wednesday afternoon. The attack encrypts all patient records, appointment systems, and prescription management software. Investigation confirms that the ransomware operator exfiltrated a copy of the patient database before encryption — including names, dates of birth, NHS numbers, and full medical histories for 3,200 patients. It is now Thursday morning.",
+    question:"What is the correct notification obligation and timeline?",
+    options:[
+      {
+        letter:"A",
+        text:"Notification is not required because the GP surgery is a healthcare provider and is exempt from GDPR breach notification requirements",
+        correct:false,
+        expl:"There is no healthcare exemption from UK GDPR breach notification. All organisations that process personal data — including GP surgeries, hospitals, and any other healthcare provider — are subject to the same obligations. Medical data is Special Category data under UK GDPR Article 9, which adds additional obligations rather than removing them."
+      },
+      {
+        letter:"B",
+        text:"The surgery has 72 hours from Wednesday afternoon to notify the ICO, and must also notify affected patients without undue delay given the high risk to their rights and freedoms",
+        correct:true,
+        expl:"Correct. The 72-hour clock starts from when the organisation became aware of the breach — Wednesday afternoon. The notification must reach the ICO by Saturday afternoon at the latest. Given that medical records for 3,200 patients have been exfiltrated (not just encrypted), this is a high-risk breach requiring both ICO notification AND direct notification to affected individuals 'without undue delay' under UK GDPR Article 34. The combination of medical data, large volume, and confirmed exfiltration makes both obligations clear-cut."
+      },
+      {
+        letter:"C",
+        text:"The surgery should wait until the forensic investigation is complete before notifying the ICO, to ensure accurate information is provided",
+        correct:false,
+        expl:"Waiting for a complete investigation before notifying will almost certainly breach the 72-hour requirement. UK GDPR recognises that full information may not be available immediately — it allows for phased notification where the organisation provides what is known, states what is unknown, and commits to updating the ICO as the investigation progresses. Accuracy is important, but timeliness is legally mandated. Notify with what you know, update as you learn more."
+      },
+      {
+        letter:"D",
+        text:"Notification is only required if the ransomware operator actually uses the patient data for fraud — there is no obligation to notify based on potential risk alone",
+        correct:false,
+        expl:"UK GDPR notification is triggered by a risk to the rights and freedoms of individuals — not by confirmed harm having already occurred. Waiting to see if the data is misused before notifying is the opposite of the legal requirement. The point of notification is to allow the ICO to assess the risk and for individuals to take protective action before harm occurs. Confirmed exfiltration of medical data is itself the trigger."
+      }
+    ]
+  },
+  {
+    id:"GRC-7", n:"7", diff:"hard", crest:true,
+    title:"GRC in practice — the consultant's first call",
+    subtitle:"Apply the full WHWH model to triage a complex dual-obligation breach",
+    type:"Application", time:"7 min",
+    skills:["WHWH model","PCI-DSS","UK GDPR","Incident response"],
+    scenario:"A UK e-commerce retailer calls you on a Monday morning. Their payment processor has flagged fraudulent card transactions across multiple customers who purchased in the last four months. Initial investigation reveals: the website's e-commerce platform hasn't been updated in 18 months, the payment form passes card data through the retailer's own server, and they store full card numbers and CVV codes in their database 'for customer convenience.' Their only IT resource is a part-time contractor.",
+    question:"As the first GRC action on this call, which response is MOST appropriate?",
+    options:[
+      {
+        letter:"A",
+        text:"Advise the client to patch their e-commerce platform and update their privacy policy to reflect the breach",
+        correct:false,
+        expl:"Patching is important but this is not the first action. Patching during an active incident can destroy forensic evidence. Updating a privacy policy is entirely the wrong priority — a privacy policy update does not notify the ICO, does not protect affected customers, and does not stop the ongoing breach. This response misses every critical immediate obligation."
+      },
+      {
+        letter:"B",
+        text:"Take the payment form offline immediately, instruct the client to notify the ICO within 72 hours and engage a PCI Forensic Investigator, and do not alter any systems before forensic preservation",
+        correct:true,
+        expl:"Correct. The immediate priorities in sequence: (1) Stop the bleeding — take the payment form offline to prevent further card data from being compromised. (2) Preserve evidence — do not patch, reboot, or modify systems before forensic imaging. (3) Legal obligations — UK GDPR: notify the ICO within 72 hours of becoming aware. PCI-DSS: notify the payment processor and card brands, engage a PCI Forensic Investigator (PFI). The CVV storage alone is a serious PCI-DSS violation independent of the breach — this will need to be disclosed to the card brands."
+      },
+      {
+        letter:"C",
+        text:"Advise the client that storing CVV codes is a PCI-DSS violation and they should delete the database immediately",
+        correct:false,
+        expl:"Deleting the database during an active incident destroys forensic evidence and could constitute obstruction of the PFI investigation. While CVV storage is indeed a PCI-DSS violation (Requirement 3 explicitly prohibits storing CVV after authorisation), the correct action during an active breach is to preserve the evidence. Deletion is a remediation step for after the investigation, not during it."
+      },
+      {
+        letter:"D",
+        text:"Contact all affected customers by email immediately to warn them about the potential fraud",
+        correct:false,
+        expl:"While customer notification will eventually be required, doing this as the first action — before the scope is understood, before legal obligations are met, and without coordinating with the card brands and ICO — is premature and may prejudice the investigation. The ICO and card brands have processes for coordinated notification. Acting unilaterally on customer comms before engaging the regulators can create additional legal exposure."
+      }
+    ]
+  },
+  {
+    id:"GRC-8", n:"8", diff:"hard", crest:true,
+    title:"Risk register — scoring and ownership",
+    subtitle:"Correctly score a risk and assign the appropriate owner",
+    type:"Application", time:"6 min",
+    skills:["Risk register","Risk scoring","Governance"],
+    scenario:`You are building a risk register for a 30-person immigration law firm. During the assessment you identify the following situation: All 30 members of staff have access to all client files on a shared drive, regardless of which cases they work on. The files include immigration status, asylum claim details, nationality, and personal circumstances for highly vulnerable individuals — some of whom face deportation if their data were exposed. The firm has no role-based access controls in place.`,
+    question:"Which of the following risk register entries BEST represents this risk?",
+    options:[
+      {
+        letter:"A",
+        text:"Risk: Shared drive access. Impact: 2, Likelihood: 2, Score: 4. Treatment: Mitigate. Owner: IT Support.",
+        correct:false,
+        expl:"The impact score of 2 is seriously underestimated. This data includes asylum status and personal circumstances for vulnerable individuals who could face deportation if their data were exposed. That is a life-altering, potentially life-threatening consequence — the impact must be scored at 5. A score of 4 would classify this as a low-priority risk, which would mean it sits unaddressed for months or years. The ownership is also incomplete — IT Support can implement controls but the Managing Partner must own the risk."
+      },
+      {
+        letter:"B",
+        text:"Risk: Over-permissive access to Special Category client data — all staff can access all case files regardless of involvement. Impact: 5, Likelihood: 3, Score: 15. Treatment: Mitigate — implement role-based access control. Owner: Managing Partner.",
+        correct:true,
+        expl:"Correct. Impact 5 is justified: exposure of asylum claim data could result in deportation of vulnerable individuals — a life-altering consequence, the maximum impact category. Likelihood 3 is appropriate: no confirmed breach, but the architecture makes one structurally possible. The risk description is precise and actionable. The treatment is correct (Mitigate — RBAC). Ownership sits with the Managing Partner because this is a governance decision requiring authorisation and budget — not just an IT implementation task."
+      },
+      {
+        letter:"C",
+        text:"Risk: GDPR non-compliance. Impact: 3, Likelihood: 4, Score: 12. Treatment: Transfer — purchase cyber insurance. Owner: GDPR Lead.",
+        correct:false,
+        expl:"Transfer (insurance) does not address the root cause — insurance pays out after a breach; it doesn't prevent one or protect the vulnerable individuals whose data could be exposed. The risk description 'GDPR non-compliance' is too vague to be actionable. And an Impact score of 3 still underestimates the consequence for asylum seekers. Insurance transfer is entirely wrong for a risk where the primary harm is to vulnerable third parties, not financial loss to the organisation."
+      },
+      {
+        letter:"D",
+        text:"Risk: Unauthorised data access. Impact: 4, Likelihood: 1, Score: 4. Treatment: Accept. Owner: IT Support.",
+        correct:false,
+        expl:"A Likelihood of 1 (near-impossible) is incorrect — over-permissive access on an actively used system means insider access or credential compromise could expose the data at any time. Likelihood 1 would apply to highly theoretical scenarios. Treatment Accept is wrong: a score of 4 might fall within tolerance for standard data, but Special Category data on vulnerable asylum seekers requires active mitigation regardless of score — the stakes are too high and the control gap too obvious to accept."
+      }
+    ]
+  }
+]
+};
+
+const state = {
+  cfFilter:'all', grcFilter:'all',
+  cfAnswers: JSON.parse(localStorage.getItem('mca2-cf')||'{}'),
+  grcAnswers: JSON.parse(localStorage.getItem('mca2-grc')||'{}'),
+};
+
+function saveAnswers() {
+  localStorage.setItem('mca2-cf', JSON.stringify(state.cfAnswers));
+  localStorage.setItem('mca2-grc', JSON.stringify(state.grcAnswers));
+}
+
+function updateScores() {
+  const cfCorrect = Object.values(state.cfAnswers).filter(a=>a.correct).length;
+  const grcCorrect = Object.values(state.grcAnswers).filter(a=>a.correct).length;
+  const cfAnswered = Object.keys(state.cfAnswers).length;
+  const grcAnswered = Object.keys(state.grcAnswers).length;
+  document.getElementById('cf-bar').style.width = Math.round(cfCorrect/8*100)+'%';
+  document.getElementById('cf-score').textContent = cfCorrect+' / 8';
+  document.getElementById('grc-bar').style.width = Math.round(grcCorrect/8*100)+'%';
+  document.getElementById('grc-score').textContent = grcCorrect+' / 8';
+  document.getElementById('hdr-score').textContent = cfCorrect+grcCorrect;
+  if (cfAnswered === 8) renderSummary('cf', cfCorrect);
+  else document.getElementById('cf-summary').innerHTML = '';
+  if (grcAnswered === 8) renderSummary('grc', grcCorrect);
+  else document.getElementById('grc-summary').innerHTML = '';
+}
+
+function renderSummary(mod, correct) {
+  const answers = mod==='cf' ? state.cfAnswers : state.grcAnswers;
+  const wrong = 8 - correct;
+  const pct = Math.round(correct/8*100);
+  let grade, gradeClass, msg;
+  if (correct >= 7) {
+    grade='Excellent'; gradeClass='grade-pass';
+    msg='<strong>Strong performance.</strong> You have a solid grasp of the core concepts. Review any questions you got wrong, then move on to the next module with confidence.';
+  } else if (correct >= 5) {
+    grade='Good'; gradeClass='grade-good';
+    msg='<strong>Good foundation.</strong> Most concepts are landing well. Go back through the questions you got wrong and read the explanations carefully — understanding why a distractor is wrong is as important as knowing the right answer.';
+  } else {
+    grade='Keep Going'; gradeClass='grade-retry';
+    msg='<strong>Keep working at it.</strong> These questions are designed to be genuinely challenging. Re-read the relevant sections in your student handbook, then hit Reset and try again. Every pass through builds the thinking.';
+  }
+  const crestCorrect = QUESTIONS[mod].filter(q=>q.crest && answers[q.id]?.correct).length;
+  const crestTotal = QUESTIONS[mod].filter(q=>q.crest).length;
+  document.getElementById(mod+'-summary').innerHTML = `
+    <div class="summary-panel show">
+      <div class="summary-title">Module complete</div>
+      <div class="summary-sub">${mod==='cf'?'Cyber Fundamentals':'GRC Fundamentals'} — all 8 questions answered</div>
+      <div class="summary-score-row">
+        <div class="summary-big">${correct}</div>
+        <div class="summary-out">/ 8</div>
+        <div class="summary-grade ${gradeClass}">${grade}</div>
+      </div>
+      <div class="summary-breakdown">
+        <div class="summary-cell"><div class="summary-cell-n">${pct}%</div><div class="summary-cell-l">Score</div></div>
+        <div class="summary-cell"><div class="summary-cell-n" style="color:#4ADE80">${correct}</div><div class="summary-cell-l">Correct</div></div>
+        <div class="summary-cell"><div class="summary-cell-n" style="color:#F87171">${wrong}</div><div class="summary-cell-l">Incorrect</div></div>
+        <div class="summary-cell"><div class="summary-cell-n">${crestCorrect}/${crestTotal}</div><div class="summary-cell-l">CREST</div></div>
+      </div>
+      <div class="summary-msg">${msg}</div>
+    </div>`;
+}
+
+function resetModule(mod) {
+  if (!confirm('Reset all answers for this module? This cannot be undone.')) return;
+  if (mod==='cf') state.cfAnswers={};
+  else state.grcAnswers={};
+  saveAnswers();
+  updateScores();
+  renderCards(mod);
+  document.getElementById(mod+'-summary').innerHTML='';
+}
+
+function diffTag(d){
+  return `<span class="tag t-${d}">${d.charAt(0).toUpperCase()+d.slice(1)}</span>`;
+}
+
+function renderCards(mod) {
+  const data = QUESTIONS[mod];
+  const f = mod==='cf' ? state.cfFilter : state.grcFilter;
+  const answers = mod==='cf' ? state.cfAnswers : state.grcAnswers;
+  const visible = data.filter(q => f==='all'?true : f==='crest'?q.crest : q.diff===f);
+  const container = document.getElementById(mod+'-cards');
+  if (!visible.length) { container.innerHTML = '<div class="empty">No questions match this filter.</div>'; return; }
+
+  container.innerHTML = visible.map(q => {
+    const saved = answers[q.id];
+    const answered = !!saved;
+    const wasCorrect = saved?.correct;
+    const numClass = answered ? (wasCorrect?'correct-num':'wrong-num') : mod+'-num';
+    const numIcon = answered ? (wasCorrect?'✓':'✗') : q.n;
+    const cardClass = answered ? (wasCorrect?'answered':'answered wrong-final') : '';
+
+    const optionsHTML = q.options.map((opt,i) => {
+      let cls = '';
+      if (answered) {
+        if (opt.correct) cls = 'correct locked';
+        else if (saved.letter === opt.letter) cls = 'incorrect locked';
+        else cls = 'neutral locked';
+      }
+      const iconHTML = opt.correct
+        ? `<div class="opt-icon"><svg viewBox="0 0 20 20" fill="none" stroke="${answered?'#16A34A':'currentColor'}" stroke-width="2"><path d="M4 10l4 4 8-8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>`
+        : `<div class="opt-icon"><svg viewBox="0 0 20 20" fill="none" stroke="#DC2626" stroke-width="2"><path d="M6 6l8 8M14 6l-8 8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>`;
+
+      return `<div class="option ${cls}" id="opt-${q.id}-${i}" onclick="selectOption('${mod}','${q.id}',${i})">
+        <div class="opt-letter">${opt.letter}</div>
+        <div class="opt-content">
+          <div class="opt-text">${opt.text}</div>
+          <div class="opt-expl">${opt.expl}</div>
+        </div>
+        ${answered ? iconHTML : '<div class="opt-icon"></div>'}
+      </div>`;
+    }).join('');
+
+    const resultBanner = answered
+      ? `<div class="result-banner show ${wasCorrect?'result-correct':'result-incorrect'}">
+          ${wasCorrect ? '✓ Correct — well reasoned.' : '✗ Not quite — read the explanations on each option below.'}
+        </div>`
+      : '';
+
+    return `<div class="q-card ${cardClass}" id="card-${q.id}">
+      <div class="q-header" onclick="toggleCard('${q.id}')">
+        <div class="q-num ${numClass}">${numIcon}</div>
+        <div class="q-meta">
+          <div class="q-id ${mod}-id">${q.id}</div>
+          <div class="q-title">${q.title}</div>
+          <div class="q-subtitle">${q.subtitle}</div>
+          <div class="q-tags">
+            <span class="tag t-type">${q.type}</span>
+            ${diffTag(q.diff)}
+            <span class="tag t-time">${q.time}</span>
+            ${q.crest?'<span class="tag t-crest">CREST-relevant</span>':''}
+          </div>
+        </div>
+        <svg class="q-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 8l5 5 5-5"/></svg>
+      </div>
+      <div class="q-body">
+        <div class="meta-grid">
+          <div class="meta-cell"><div class="meta-lbl">Skills tested</div><div class="skills-row">${q.skills.map(s=>`<span class="skill ${mod}-skill">${s}</span>`).join('')}</div></div>
+          <div class="meta-cell"><div class="meta-lbl">Suggested time</div><div class="meta-val">${q.time}</div></div>
+        </div>
+        <div>
+          <div class="lbl">Scenario</div>
+          <div class="scenario-box"><div class="body-text">${q.scenario}</div></div>
+        </div>
+        <br>
+        <div>
+          <div class="lbl">Question</div>
+          <div class="question-box"><div class="body-text">${q.question}</div></div>
+        </div>
+        <div class="options" id="opts-${q.id}">${optionsHTML}</div>
+        ${resultBanner}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleCard(id) {
+  document.getElementById('card-'+id).classList.toggle('open');
+}
+
+function selectOption(mod, qid, optIdx) {
+  const answers = mod==='cf' ? state.cfAnswers : state.grcAnswers;
+  if (answers[qid]) return;
+  const q = QUESTIONS[mod].find(x=>x.id===qid);
+  const opt = q.options[optIdx];
+  answers[qid] = { letter: opt.letter, correct: opt.correct };
+  saveAnswers();
+  updateScores();
+  renderCards(mod);
+  setTimeout(()=>{
+    const card = document.getElementById('card-'+qid);
+    if (card && !card.classList.contains('open')) card.classList.add('open');
+    card?.scrollIntoView({behavior:'smooth', block:'nearest'});
+  }, 50);
+}
+
+function setFilter(mod, val, btn) {
+  if (mod==='cf') state.cfFilter=val; else state.grcFilter=val;
+  document.querySelectorAll('#'+mod+'-filters .f-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCards(mod);
+}
+
+function switchMod(mod, btn) {
+  document.querySelectorAll('.mod-tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.mod-panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('panel-'+mod).classList.add('active');
+}
+
+renderCards('cf');
+renderCards('grc');
+updateScores();
+
+
+</script>
+</body>
+</html>
